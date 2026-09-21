@@ -1,0 +1,20 @@
+# Generato dall'installer NixOS, specifico per ogni macchina
+hosts/*/hardware-configuration.nix
+
+# Symlink creato da nix build
+result
+result-*
+
+# Vecchia configurazione (riferimento)
+old_configuration/
+
+# direnv
+.direnv/
+
+# devenv
+.devenv/
+devenv.local.nix
+.devenv.flake.nix
+
+# Ghostty themes sincronizzati esternamente
+config/ghostty/themes/dankcolors
