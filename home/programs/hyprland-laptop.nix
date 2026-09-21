@@ -186,6 +186,9 @@ in
         "syncthing serve --no-browser --logfile=default"
         "wl-paste --watch cliphist store"
         "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"
+        # Hyprland doesn't honour XDG autostart (services.forticlient.trayAutostart's
+        # /etc/xdg/autostart entry), so the SAML-SSO tray needs an explicit exec-once.
+        "forticlient-tray"
         # Sincronizza subito lo stato di eDP-1 in base al coperchio, poi resta in
         # ascolto per ri-sincronizzare quando i monitor esterni compaiono/spariscono
         # (vedi definizione di hyprLidWatch sopra). Il marker che crea evita che il

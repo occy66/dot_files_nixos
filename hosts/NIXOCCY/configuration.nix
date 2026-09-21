@@ -131,6 +131,16 @@
   services.blueman.enable = true;
   services.upower.enable = true;
 
+  # FortiClient VPN (IPsec/SSL with SAML SSO) — https://github.com/jplana/forticlient-nixos
+  # gnome-keyring itself and its greetd PAM unlock are already configured above
+  # (services.gnome.gnome-keyring.enable / security.pam.services.greetd.enableGnomeKeyring),
+  # so this only needs to point the module's own keyring wiring at the same "greetd" PAM
+  # service — it's a harmless duplicate of the enableGnomeKeyring = true set above.
+  services.forticlient = {
+    enable = true;
+    gnomeKeyring.pamServices = [ "login" "greetd" ];
+  };
+
   # AnyDesk: remote desktop daemon (unattended access).
   # No NixOS module exists for anydesk; run the daemon via a plain systemd service.
   systemd.services.anydesk = {

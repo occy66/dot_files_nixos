@@ -41,9 +41,15 @@
       url = "github:AlexAntonik/nix-graph";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # FortiClient VPN (IPsec/SSL with SAML SSO) — https://github.com/jplana/forticlient-nixos
+    forticlient-nixos = {
+      url = "github:jplana/forticlient-nixos";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, dms, dank-greeter, copilot-cli-flake, zen-browser, iris, nix-graph, ... }:
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, dms, dank-greeter, copilot-cli-flake, zen-browser, iris, nix-graph, forticlient-nixos, ... }:
     let
       system = "x86_64-linux";
       pkgsUnstable = import nixpkgs-unstable {
@@ -114,6 +120,7 @@
           ./hosts/NIXOCCY/configuration.nix
           dms.nixosModules.default
           dank-greeter.nixosModules.default
+          forticlient-nixos.nixosModules.forticlient
           home-manager.nixosModules.home-manager
           ({ pkgs, ... }: {
             home-manager = {
