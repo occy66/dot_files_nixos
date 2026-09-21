@@ -35,6 +35,7 @@ in
         $DRY_RUN_CMD ${pkgs.git}/bin/git -C "$dest" pull --ff-only --quiet || true
       fi
     }
+    sync nubem_dot_files "$HOME/.nubem_dot_files"
     sync nv-ide          "$HOME/.nv-ide"
     sync gcheck          "$HOME/.gcheck"
     if [ ! -L "$HOME/.config/nvim" ]; then
