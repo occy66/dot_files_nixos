@@ -63,6 +63,15 @@ let
     fi
   '';
 
+  # Sospende il sistema alla chiusura del coperchio, ma solo se eDP-1 è rimasto lo
+  # stato desiderato (cioè NON c'è un monitor esterno che ha preso il suo posto).
+  # Va chiamato DOPO hyprLidSync, che scrive lo stato aggiornato in monitors-dynamic.conf.
+  hyprLidSuspendIfAlone = pkgs.writeShellScript "hypr-lid-suspend-if-alone" ''
+    set -uo pipefail
+    DYNAMIC_CONF="$HOME/.local/state/hypr/monitors-dynamic.conf"
+    grep -q disable "$DYNAMIC_CONF" 2>/dev/null || systemctl suspend
+  '';
+
   # Sync iniziale + ascolto eventi Hyprland (monitor aggiunto/rimosso) al posto di
   # un timeout fisso: reagisce a quando i monitor esterni compaiono davvero,
   # con qualche re-sync ritardato per assorbire negoziazioni lente (dock/hub).
@@ -306,8 +315,10 @@ in
         # un monitor che sta per spegnersi. Il guard sul marker ignora l'evento se lo
         # script di avvio non ha ancora finito: Hyprland rilancia switch:on anche solo
         # per risincronizzare lo stato corrente all'avvio, non solo per una chiusura
-        # reale, e senza questo guard chiederebbe la password due volte.
-        ", switch:on:Lid Switch, exec, bash -c '${hyprLidSync}; [ -f /tmp/hypr-monitor-init-done ] || exit 0; dms ipc call lock lock'"
+        # reale, e senza questo guard chiederebbe la password due volte. Dopo il lock,
+        # sospende il sistema SOLO se non c'è un monitor esterno attivo a fare da display
+        # (altrimenti il coperchio chiuso col portatile in dock continuerebbe a sospendersi).
+        ", switch:on:Lid Switch, exec, bash -c '${hyprLidSync}; [ -f /tmp/hypr-monitor-init-done ] || exit 0; dms ipc call lock lock; ${hyprLidSuspendIfAlone}'"
         ", switch:off:Lid Switch, exec, bash -c '[ -f /tmp/hypr-monitor-init-done ] || exit 0; ${hyprLidSync}'"
       ];
 
