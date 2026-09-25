@@ -180,7 +180,7 @@ in
       input = {
         kb_layout = "it,it";
         kb_variant = ",nodeadkeys";
-        kb_options = "grp:alt_shift_toggle,ctrl:nocaps";
+        kb_options = "grp:alt_shift_toggle";
         follow_mouse = 1;
         sensitivity = 0;
         touchpad = {

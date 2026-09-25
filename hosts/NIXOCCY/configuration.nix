@@ -52,6 +52,12 @@
     withUWSM = true;
   };
 
+  # Niri — scrollable-tiling compositor, available as an alternative session alongside
+  # Hyprland/Sway/GNOME at the dms-greeter session picker. Registers its own .desktop file
+  # via services.displayManager.sessionPackages; dms-greeter's own compositor.name above
+  # only controls what the login screen itself runs under, not the chosen session.
+  programs.niri.enable = true;
+
   # Enables Sway system-wide with the GTK wrapper (needed for GTK file dialogs, app theming).
   # Extra packages are Wayland utilities that don't fit in home.packages (they need system-level access).
   # programs.sway = {
@@ -328,11 +334,11 @@
   ];
 
   # Italian keyboard layout; second variant "nodeadkeys" gives a US-style layout as an alt.
-  # ctrl:nocaps remaps CapsLock to Ctrl; grp:alt_shift_toggle switches between the two layouts.
+  # grp:alt_shift_toggle switches between the two layouts.
   services.xserver.xkb = {
     layout = "it,it";
     variant = ",nodeadkeys";
-    options = "ctrl:nocaps,grp:alt_shift_toggle";
+    options = "grp:alt_shift_toggle";
   };
   console.keyMap = "it";
 

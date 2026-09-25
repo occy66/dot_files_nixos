@@ -186,7 +186,7 @@
         "type:keyboard" = {
           xkb_layout = "it,it";
           xkb_variant = ",nodeadkeys";
-          xkb_options = "grp:alt_shift_toggle,ctrl:nocaps";
+          xkb_options = "grp:alt_shift_toggle";
         };
         "type:touchpad" = {
           tap = "enabled";

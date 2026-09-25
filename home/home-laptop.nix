@@ -10,6 +10,7 @@ in
     ./programs/git.nix
     # ./programs/sway-laptop.nix
     ./programs/hyprland-laptop.nix
+    ./programs/niri-laptop.nix
     ./programs/hypridle.nix
     # ./programs/brave-laptop.nix
     ./packages.nix
